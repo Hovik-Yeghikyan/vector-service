@@ -21,7 +21,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/register")
     public String registerPage(@RequestParam(value = "msg", required = false) String msg, ModelMap modelMap) {

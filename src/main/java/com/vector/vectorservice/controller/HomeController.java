@@ -1,5 +1,6 @@
 package com.vector.vectorservice.controller;
 
+import com.vector.vectorservice.entity.enums.UserType;
 import com.vector.vectorservice.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,5 +33,17 @@ public class HomeController {
         }
         return "loginPage";
     }
+
+    @GetMapping("/loginSuccess")
+    public String loginSuccess(@AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser != null && currentUser.getUser() != null) {
+            log.info("user with {} email logged in", currentUser.getUser().getEmail());
+            if (currentUser.getUser().getUserType() == UserType.ADMIN) {
+                return "redirect:/adminPage";
+            }
+        }
+        return "redirect:/";
+    }
+
 
 }

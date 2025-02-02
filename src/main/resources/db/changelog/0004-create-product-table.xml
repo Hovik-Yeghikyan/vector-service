@@ -2,7 +2,11 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <changeSet id="0004-create-product-table.xml" author="hyeghikyan">
-
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="product"/>
+            </not>
+        </preConditions>
         <createTable tableName="product">
             <column type="int" name="id" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

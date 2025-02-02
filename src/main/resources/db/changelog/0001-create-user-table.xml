@@ -3,6 +3,11 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet id="0001-create-user-table" author="hyeghikyan">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
 
         <createTable tableName="user">
             <column type="int" name="id" autoIncrement="true">
@@ -19,6 +24,9 @@
             </column>
             <column type="varchar(255)" name="password">
                 <constraints nullable="false"/>
+            </column>
+            <column type="varchar(255)" name="phone">
+                <constraints nullable="true"/>
             </column>
             <column defaultValue="USER" type="ENUM('ADMIN', 'USER')" name="user_type">
             </column>

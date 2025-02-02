@@ -3,7 +3,7 @@ package com.vector.vectorservice.service.impl;
 
 
 import com.vector.vectorservice.entity.User;
-import com.vector.vectorservice.entity.UserType;
+import com.vector.vectorservice.entity.enums.UserType;
 import com.vector.vectorservice.repository.UserRepository;
 import com.vector.vectorservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final SendMailService sendMailService;
+    private final SendMailServiceImpl sendMailService;
     private final PasswordEncoder passwordEncoder;
 
 

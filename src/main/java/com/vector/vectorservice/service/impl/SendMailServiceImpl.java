@@ -14,7 +14,7 @@ import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
-public class SendMailService {
+public class SendMailServiceImpl {
 
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;

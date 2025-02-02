@@ -1,5 +1,6 @@
 package com.vector.vectorservice.entity;
 
+import com.vector.vectorservice.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
