@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+</head>
+<body>
+Add Product
+
+<form action="/admin/add" method="post" enctype="multipart/form-data">
+    title: <input type="text" name="title"/> <br>
+    price: <input type="number" name="price"/> <br>
+    description: <input type="text" name="description"/> <br>
+    Category:<select name="category">
+    <option value="TV">TV</option>
+    <option value="TABLET">TABLET</option>
+    <option value="PHONE">PHONE</option>
+    <option value="COMPUTER">COMPUTER</option>
+</select><br><br>
+    image: <input type="file" name="image">
+    <input type="submit" value="Add">
+</form>
+</body>
+</html>

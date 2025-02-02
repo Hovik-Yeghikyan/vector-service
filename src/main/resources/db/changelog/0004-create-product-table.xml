@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="0004-create-product-table.xml" author="hyeghikyan">
+
+        <createTable tableName="product">
+            <column type="int" name="id" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column type="varchar(255)" name="name">
+                <constraints nullable="false"/>
+            </column>
+            <column type="double" name="price">
+                <constraints nullable="true"/>
+            </column>
+            <column type="varchar(255)" name="description">
+                <constraints nullable="false"/>
+            </column>
+            <column type="varchar(255)" name="pic_name">
+                <constraints nullable="true"/>
+            </column>
+
+            <column type="int" name="category_id">
+                <constraints nullable="false" foreignKeyName="fk_category_id" references="category(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

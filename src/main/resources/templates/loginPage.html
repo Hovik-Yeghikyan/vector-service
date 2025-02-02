@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/loginStyle.css">
+</head>
+<body>
+<div class="login-container">       <th:block th:include="fragment/fragments.html::language"></th:block>
+    <h2 th:text="#{index.login}"></h2>
+    <p th:if="${msg!=null}" style="color: red;font-size:16px" th:text="${msg}"></p>
+    <form action="/login" method="post" class="login-form">
+        <div class="input-group">
+            <label for="username"><th:block th:text="#{index.email}"></th:block></label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password"><th:block th:text="#{index.password}"></th:block></label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="login-btn"><th:block th:text="#{index.login}"></th:block> </button>
+    </form>
+    <p class="signup-link"><th:block th:text="#{index.question}"></th:block><a href="/register"><th:block th:text="#{index.register}"></th:block></a></p>
+</div>
+</body>
+</html>

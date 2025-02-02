@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/registerStyle.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <p th:if="${msg!=null}" style="color: red;font-size:16px" th:text="${msg}"></p>
+        <h1 th:text="#{index.register}"></h1>                              <th:block th:include="fragment/fragments.html::language"></th:block>
+        <form action="/register" method="post">
+            <label for="first-name"><th:block th:text="#{index.name}"></th:block> </label>
+            <input type="text" id="first-name" name="name" required>
+
+            <label for="last-name"><th:block th:text="#{index.surname}"></th:block></label>
+            <input type="text" id="last-name" name="surname" required>
+
+            <label for="email"><th:block th:text="#{index.email}"></th:block></label>
+            <input type="email" id="email" name="email" required >
+
+            <label for="password"><th:block th:text="#{index.password}"></th:block></label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit"><th:block th:text="#{index.register}"></th:block> </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

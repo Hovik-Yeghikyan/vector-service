@@ -1,0 +1,25 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="0005-create-order-table.xml" author="hyeghikyan">
+        <createTable tableName="order">
+            <column type="int" name="id" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column type="int" name="product_id">
+                <constraints nullable="true" foreignKeyName="fk2_product_id" references="product(id)"/>
+            </column>
+            <column type="double" name="price">
+                <constraints nullable="true"/>
+            </column>
+            <column type="ENUM('NEW', 'DELIVERED', 'CANCELED')" name="status">
+            </column>
+            <column type="int" name="orders_user_id">
+                <constraints nullable="true" foreignKeyName="fk_orders_user_id" references="user(id)"/>
+            </column>
+            <column type="datetime" name="created_date">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="0003-create-service-table.xml" author="hyeghikyan">
+
+        <createTable tableName="service">
+            <column type="int" name="id" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column type="varchar(255)" name="description">
+                <constraints nullable="false"/>
+            </column>
+        <column type="ENUM('COMPUTER', 'PHONE', 'TABLET')" name="device_type">
+        </column>
+            <column type="datetime" name="visit_date_time">
+                <constraints nullable="false"/>
+            </column>
+            <column type="int" name="user_id">
+                <constraints nullable="false" foreignKeyName="fk_user_id" references="user(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
