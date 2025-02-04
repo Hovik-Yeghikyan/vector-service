@@ -1,19 +1,26 @@
 package com.vector.vectorservice.service;
 
 
-import com.vector.vectorservice.entity.User;
+import com.vector.vectorservice.dto.UserRequestDto;
+import com.vector.vectorservice.dto.UserResponseDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public interface UserService {
 
 
-    User save(User user);
+    UserResponseDto save(UserRequestDto userRequestDto);
 
 
-    Optional<User> findByEmail(String email);
+    Optional<UserResponseDto> findByEmail(String email);
 
-    User register(User user);
+    UserResponseDto register(UserRequestDto userRequestDto, MultipartFile multipartFile) throws IOException;
 
-    User findByToken(String token);
+    UserResponseDto findByToken(String token);
+
+    UserResponseDto edit(int id, UserRequestDto userRequestDto);
+
+
 }

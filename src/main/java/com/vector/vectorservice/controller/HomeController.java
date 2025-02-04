@@ -1,5 +1,6 @@
 package com.vector.vectorservice.controller;
 
+
 import com.vector.vectorservice.entity.enums.UserType;
 import com.vector.vectorservice.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,10 @@ public class HomeController {
         return "redirect:/";
     }
 
-
+    @GetMapping("/adminPage")
+    public String adminPage() {
+        return "/admin/adminPage";
+    }
 }
+
+
