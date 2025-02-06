@@ -8,7 +8,7 @@
             </not>
         </preConditions>
         <createTable tableName="service">
-            <column type="int" name="id" autoIncrement="true">
+            <column type="BIGINT" name="id" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column type="varchar(255)" name="description">
@@ -19,7 +19,7 @@
             <column type="datetime" name="visit_date_time">
                 <constraints nullable="false"/>
             </column>
-            <column type="int" name="user_id">
+            <column type="BIGINT" name="user_id">
                 <constraints nullable="false" foreignKeyName="fk_user_id" references="user(id)"/>
             </column>
         </createTable>

@@ -19,7 +19,7 @@ import java.util.Date;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String description;
     @Enumerated(EnumType.STRING)
     private DeviceType deviceType;

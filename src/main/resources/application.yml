@@ -40,4 +40,4 @@ logging:
 vector-service:
   picture:
     upload:
-      directory: C:\\Users\\hovoe\\IdeaProjects\\Java 2025 Spring\\vector-service\\upload
+      directory: C:\\Users\hovoe\\IdeaProjects\\Java 2025 Spring\\vector-service\\upload

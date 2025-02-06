@@ -10,16 +10,17 @@ import com.vector.vectorservice.exception.UserAlreadyExistsException;
 import com.vector.vectorservice.mapper.UserMapper;
 import com.vector.vectorservice.repository.UserRepository;
 import com.vector.vectorservice.service.UserService;
+import com.vector.vectorservice.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final SendMailServiceImpl sendMailService;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final FileUtil fileUtil;
 
 
     @Override
@@ -53,27 +55,20 @@ public class UserServiceImpl implements UserService {
                 userRequestDto.getName().isEmpty() || userRequestDto.getSurname().isEmpty()) {
             return null;
         }
-
         if (userRepository.findByEmail(userRequestDto.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("User with this email already exists");
         }
-
-        String fileName;
         if (!multipartFile.isEmpty()) {
-            fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-            File file = new File(uploadPath, fileName);
-            multipartFile.transferTo(file);
-            userRequestDto.setPicName(fileName);
+            String imageName = fileUtil.saveImage(multipartFile);
+            userRequestDto.setPicName(imageName);
         }
-
         String activationToken = UUID.randomUUID().toString();
         userRequestDto.setActive(false);
         userRequestDto.setToken(activationToken);
         userRequestDto.setUserType(UserType.USER);
-        userRequestDto.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
-
-        UserResponseDto save = save(userRequestDto);
-        sendMailService.sendWelcomeMail(userMapper.toEntity(userMapper.toUserRequestDto(save)));
+        UserRequestDto encodedUser = userMapper.regPassword(userRequestDto, passwordEncoder);
+        UserResponseDto save = save(encodedUser);
+        sendMailService.sendWelcomeMail(save);
         return save;
     }
 
@@ -86,17 +81,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto edit(int id, UserRequestDto userRequestDto) {
-        User userById = userRepository.findById(id)
-                .orElseThrow(() -> {
-                    String message = "Cannot find user with id " + id;
-                    return new ResourceNotFoundException(message);
-                });
-
+    public void tokenActivation(UserResponseDto userResponseDto) {
+        Long id = userResponseDto.getId();
+        User userById = getUserById(id);
         userById.setActive(true);
         userById.setToken(null);
-        User updatedUser = userRepository.save(userById);
-        return userMapper.toDto(updatedUser);
+        userRepository.save(userById);
+    }
+
+
+    private User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> {
+                    String message = "Cannot find user with id " + id;
+                    throw new ResourceNotFoundException(message);
+                });
     }
 
 }

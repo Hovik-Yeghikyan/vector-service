@@ -20,7 +20,7 @@ public interface UserService {
 
     UserResponseDto findByToken(String token);
 
-    UserResponseDto edit(int id, UserRequestDto userRequestDto);
+    void tokenActivation(UserResponseDto userResponseDto);
 
 
 }

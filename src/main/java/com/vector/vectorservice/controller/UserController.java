@@ -61,7 +61,7 @@ public class UserController {
             log.error("User already active! {}", byToken.getEmail());
             return "redirect:/";
         }
-        userService.edit(byToken.getId(),userMapper.toUserRequestDto(byToken));
+        userService.tokenActivation(byToken);
 
         return "redirect:/";
     }
