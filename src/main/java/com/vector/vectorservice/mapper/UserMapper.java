@@ -20,9 +20,12 @@ public interface UserMapper {
     UserResponseDto toUserResponseDto(UserRequestDto userRequestDto);
 
     @Mapping(target = "password", expression = "java(mapPassword(userRequestDto, passwordEncoder))")
+    @Mapping(target = "userType", constant = "USER")
+    @Mapping(target = "active", constant = "false")
     UserRequestDto regPassword(UserRequestDto userRequestDto, @Context PasswordEncoder passwordEncoder);
 
     default String mapPassword(UserRequestDto userRequestDto, @Context PasswordEncoder passwordEncoder) {
         return passwordEncoder.encode(userRequestDto.getPassword());
     }
+
 }

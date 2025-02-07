@@ -4,7 +4,6 @@ package com.vector.vectorservice.service.impl;
 import com.vector.vectorservice.dto.UserRequestDto;
 import com.vector.vectorservice.dto.UserResponseDto;
 import com.vector.vectorservice.entity.User;
-import com.vector.vectorservice.entity.enums.UserType;
 import com.vector.vectorservice.exception.ResourceNotFoundException;
 import com.vector.vectorservice.exception.UserAlreadyExistsException;
 import com.vector.vectorservice.mapper.UserMapper;
@@ -63,9 +62,7 @@ public class UserServiceImpl implements UserService {
             userRequestDto.setPicName(imageName);
         }
         String activationToken = UUID.randomUUID().toString();
-        userRequestDto.setActive(false);
         userRequestDto.setToken(activationToken);
-        userRequestDto.setUserType(UserType.USER);
         UserRequestDto encodedUser = userMapper.regPassword(userRequestDto, passwordEncoder);
         UserResponseDto save = save(encodedUser);
         sendMailService.sendWelcomeMail(save);
@@ -92,10 +89,7 @@ public class UserServiceImpl implements UserService {
 
     private User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> {
-                    String message = "Cannot find user with id " + id;
-                    throw new ResourceNotFoundException(message);
-                });
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find user with id " + id));
     }
 
 }
