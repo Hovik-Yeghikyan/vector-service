@@ -9,11 +9,14 @@
         </preConditions>
         <createTable tableName="category">
 
-            <column type="int" name="id" autoIncrement="true">
+            <column type="BIGINT" name="id" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column type="varchar(255)" name="name">
                 <constraints nullable="false"/>
+            </column>
+            <column type="varchar(255)" name="image_name">
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>

@@ -12,7 +12,7 @@
     <div class="form-container">
         <p th:if="${msg!=null}" style="color: red;font-size:16px" th:text="${msg}"></p>
         <h1 th:text="#{index.register}"></h1>                              <th:block th:include="fragment/fragments.html::language"></th:block>
-        <form action="/register" method="post">
+        <form action="/register" method="post" enctype="multipart/form-data">
             <label for="first-name"><th:block th:text="#{index.name}"></th:block> </label>
             <input type="text" id="first-name" name="name" required>
 
@@ -22,8 +22,13 @@
             <label for="email"><th:block th:text="#{index.email}"></th:block></label>
             <input type="email" id="email" name="email" required >
 
+            <label for="phone"><th:block th:text="#{index.phoneNumber}"></th:block></label>
+            <input type="text" id="phone" name="phone" required >
+
             <label for="password"><th:block th:text="#{index.password}"></th:block></label>
             <input type="password" id="password" name="password" required>
+                      <span th:text="#{index.profilePicture}"></span>
+                      <input type="file" name="image" >
 
             <button type="submit"><th:block th:text="#{index.register}"></th:block> </button>
         </form>

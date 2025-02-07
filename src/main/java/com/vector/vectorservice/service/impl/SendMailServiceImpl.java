@@ -1,6 +1,7 @@
 package com.vector.vectorservice.service.impl;
 
 
+import com.vector.vectorservice.dto.UserResponseDto;
 import com.vector.vectorservice.entity.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -20,10 +21,10 @@ public class SendMailServiceImpl {
     private final TemplateEngine templateEngine;
 
     @Async
-    public void sendWelcomeMail(User user) {
+    public void sendWelcomeMail(UserResponseDto userResponseDto) {
 
         final Context ctx = new Context();
-        ctx.setVariable("user", user);
+        ctx.setVariable("user", userResponseDto);
 
         final String htmlContent = templateEngine.process("mail/welcome-mail.html", ctx);
 
@@ -32,7 +33,7 @@ public class SendMailServiceImpl {
         try {
             final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             message.setSubject("Welcome Html Mail");
-            message.setTo(user.getEmail());
+            message.setTo(userResponseDto.getEmail());
 
             message.setText(htmlContent, true);
 

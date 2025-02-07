@@ -1,9 +1,8 @@
 package com.vector.vectorservice.security;
 
 
-
 import com.vector.vectorservice.entity.User;
-import com.vector.vectorservice.service.UserService;
+import com.vector.vectorservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +17,11 @@ import java.util.Optional;
 @Primary
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> byEmail = userService.findByEmail(username);
+        Optional<User> byEmail = userRepository.findByEmail(username);
         if (byEmail.isPresent()) {
             User userFromDB = byEmail.get();
             return new CurrentUser(userFromDB);
