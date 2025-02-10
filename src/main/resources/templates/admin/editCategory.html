@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Category</title>
+    <link rel="stylesheet" href="/css/updateCategoryStyle.css">
+</head>
+<body>
+<div class="container">
+    <h1>Update Category</h1>
+
+
+    <section class="update-category">
+        <form action="/admin/editCategory" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" th:value="${category.id}">
+
+            <label for="category-name">Category new Name:</label>
+            <input type="text" id="category-name" name="name" placeholder="Enter category NEW name" th:value="${category.name}" required>
+
+            <label for="category-image">Category new Image:</label>
+            <input type="file" id="category-image" name="image" accept="image/*" required>
+
+            <button type="submit">Update Category</button>
+            <button> <a href="/categories" style="text-decoration: none; color: white;">Go To Categories page</a></button>
+        </form>
+    </section>
+
+    <!-- Preview Image -->
+    <div id="image-preview" class="image-preview" style="display: none;">
+        <h3>Image Preview</h3>
+        <img id="preview-img" src="${category.imageUrl}" alt="Current Image" width="200">
+    </div>
+</div>
+
+<script src="/js/updateCategory.js"></script>
+</body>
+</html>

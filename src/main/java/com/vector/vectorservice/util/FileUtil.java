@@ -25,6 +25,7 @@ public class FileUtil {
         }
         return null;
     }
+
     public String saveImage(MultipartFile multipartFile) throws IOException {
         String imageName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
         File file = new File(uploadPath, imageName);

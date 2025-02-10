@@ -8,21 +8,27 @@
 </head>
 <body>
 <header>
-    <h1 th:text="#{index.welcome}"></h1>        <th:block th:include="fragment/fragments.html::language"></th:block>
-    <div th:if="${currentUser== null}"><a href="/loginPage" th:text="#{index.login}"></a> </div>
-    <div th:if="${currentUser!= null}"><span th:text="${currentUser.getUser().name} "></span><a href="/logout" th:text="#{index.logout}">logout</a> </div>
+    <h1 th:text="#{index.welcome}"></h1>
+    <th:block th:include="fragment/fragments.html::language"></th:block>
+    <div th:if="${currentUser== null}"><a href="/loginPage" th:text="#{index.login}"></a></div>
+    <div th:if="${currentUser!=null && currentUser.getUser().userType.name()=='ADMIN'}">
+    <a href="/admin/adminPage">Admin Panel</a> <!-- Added admin panel link -->
+    </div>
+    <div th:if="${currentUser!= null}"><span th:text="${currentUser.getUser().name} "></span><a href="/logout"
+                                                                                                th:text="#{index.logout}">logout</a>
+    </div>
 </header>
 
 <main>
     <div class="categories">
         <div class="category">
-           <a th:if="${currentUser== null}" href="/loginPage"><img src="/image/parts.jpg" alt="TV" ></a>
-           <a th:if="${currentUser!= null}" href="/tv"><img src="/image/parts.jpg" alt="TV" ></a>
+            <a th:if="${currentUser== null}" href="/loginPage"><img src="/image/parts.jpg" alt="TV"></a>
+            <a th:if="${currentUser!= null}" href="/tv"><img src="/image/parts.jpg" alt="TV"></a>
             <h2 th:text="#{index.product}"></h2>
         </div>
         <div class="category">
-            <a th:if="${currentUser== null}" href="/loginPage"><img src="/image/repair.jpg" alt="Tablets" ></a>
-            <a th:if="${currentUser!= null}" href="/tablet"><img src="/image/repair.jpg" alt="Tablets" ></a>
+            <a th:if="${currentUser== null}" href="/loginPage"><img src="/image/repair.jpg" alt="Tablets"></a>
+            <a th:if="${currentUser!= null}" href="/tablet"><img src="/image/repair.jpg" alt="Tablets"></a>
             <h2 th:text="#{index.service}"></h2>
         </div>
 

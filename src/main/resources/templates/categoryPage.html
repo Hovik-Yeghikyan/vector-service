@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>PRODUCTS</title>
+    <title>CATEGORIES</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/css/slick.css">
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/paginationStyle.css">
 </head>
 
 <body>
@@ -38,9 +39,9 @@
                     <!-- Main-menu -->
                     <div class="main-menu d-none d-lg-block">
                         <nav>
-                            <ul id="navigation">
-                                <li><a href="/" style="font-size: 38px">Home</a></li>
-                            </ul>
+<!--                            <ul id="navigation">-->
+<!--                                <li><a href="/" style="font-size: 38px">Home</a></li>-->
+<!--                            </ul>-->
                         </nav>
                     </div>
                     <!-- Header Right -->
@@ -65,34 +66,34 @@
     <div class="popular-items section-padding30">
         <div class="container">
             <div class="row">
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" th:each="product : ${products}">
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" th:each="category : ${categories}">
                     <div class="single-popular-items mb-50 text-center">
                         <div class="popular-img">
-                            <img  th:if="${product.picName != null}" th:src="@{/getImage(imageName=${product.picName})}">
+                            <img  th:if="${category.imageName != null}" th:src="@{/getImage(imageName=${category.imageName})}">
                             <div class="img-cap">
-                                <span>Add to cart</span>
+                                <span><a th:href="@{/admin/editCategory(id=${category.id})}">UPDATE</a> | <a th:href="@{/admin/delete(id=${category.id})}">DELETE</a></span>
                             </div>
                             <div class="favorit-items">
                                 <span class="flaticon-heart"></span>
                             </div>
                         </div>
                         <div class="popular-caption">
-                            <h3 ><a th:text="${product.getTitle()}"></a></h3>
-                            <p th:text="${product.getDescription()}"></p>
-                            <span th:text="${product.getPrice()}"></span>
+                            <h3 ><a th:text="${category.name}"></a></h3>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Button -->
-            <div class="row justify-content-center">
-                <div class="room-btn pt-70">
-                    <a href="catagori.html" class="btn view-btn1">View More Products</a>
-                </div>
+            <!-- Pagination -->
+            <div th:if="${categories.totalPages > 0}" class="pagination text-center">
+    <span th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{/categories(pageSize=${categories.size}, pageNumber=${pageNumber})}"
+           th:text="${pageNumber}"
+           th:classappend="${pageNumber == categories.number + 1} ? 'active'"></a>
+    </span>
             </div>
-        </div>
-    </div>
-    <!-- Popular Items End -->
+
+
+            <!-- Popular Items End -->
 
 </main>
 

@@ -1,0 +1,30 @@
+/* Центрирование пагинации */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Расстояние сверху */
+}
+
+/* Стили для ссылок пагинации */
+.pagination a {
+    text-decoration: none;
+    color: black; /* Черный цвет текста */
+    padding: 10px 15px;
+    margin: 0 5px; /* Расстояние между кнопками */
+    border-radius: 5px; /* Радиус скругления для кнопок */
+    font-size: 16px; /* Размер шрифта */
+    transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+}
+
+/* Стили для активной страницы */
+.pagination a.active {
+    background-color: #000; /* Черный фон для активной страницы */
+    color: white; /* Белый цвет текста для активной страницы */
+}
+
+/* Стили для ссылок пагинации при наведении */
+.pagination a:hover {
+    background-color: #f0f0f0; /* Светлый фон при наведении */
+    color: black; /* Черный цвет текста при наведении */
+}
