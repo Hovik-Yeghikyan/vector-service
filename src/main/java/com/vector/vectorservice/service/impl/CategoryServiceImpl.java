@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +43,8 @@ public class CategoryServiceImpl implements CategoryService {
         if (!multipartFile.isEmpty()) {
             String imageName = fileUtil.saveImage(multipartFile);
             categoryRequestDto.setImageName(imageName);
+        }else {
+            throw new ResourceNotFoundException("There are no any picture");
         }
         Category category = categoryMapper.toEntity(categoryRequestDto);
         categoryRepository.save(category);
@@ -51,42 +52,40 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryResponseDto> findByName(String name) {
-        Optional<Category> byName = categoryRepository.findByName(name);
-        if (byName.isPresent()) {
+    public Optional<CategoryResponseDto> existByName(String name) {
+        Optional<Category> categoryByName = categoryRepository.findByName(name);
+        if (categoryByName.isPresent()) {
             throw new ResourceAlreadyExistsException("Category with this name already exists!");
         }
-        return byName.map(categoryMapper::toDto);
+        return categoryByName.map(categoryMapper::toDto);
     }
 
     @Override
     public void update(CategoryResponseDto categoryResponseDto, MultipartFile multipartFile) throws IOException {
-        CategoryResponseDto byId = findById(categoryResponseDto.getId());
+        Category response = findById(categoryResponseDto.getId());
         String imageName = fileUtil.saveImage(multipartFile);
-        byId.setImageName(imageName);
-        byId.setName(categoryResponseDto.getName());
-        Category category = categoryMapper.toEntityFromResponse(byId);
-        categoryRepository.save(category);
+        response.setImageName(imageName);
+        response.setName(categoryResponseDto.getName());
+        categoryRepository.save(response);
     }
 
 
     @Override
-    public CategoryResponseDto findById(Long id) {
-        return categoryMapper.toDto(categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find category with id " + id)));
+    public Category findById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find category with id " + id));
     }
 
     @Override
     public void deleteById(Long id) {
-        Optional<Category> byId = categoryRepository.findById(id);
-        categoryRepository.delete(byId.orElseThrow(()
-                -> new ResourceNotFoundException("Cannot find category with id " + id)));
+        categoryRepository.delete(findById(id));
+
     }
 
     private Page<CategoryResponseDto> toDtoPage(Page<Category> categories) {
         List<CategoryResponseDto> dtos = categories.stream()
                 .map(categoryMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
 
         return new PageImpl<>(dtos, categories.getPageable(), categories.getTotalElements());
     }

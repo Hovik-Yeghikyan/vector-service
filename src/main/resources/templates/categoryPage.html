@@ -69,7 +69,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6" th:each="category : ${categories}">
                     <div class="single-popular-items mb-50 text-center">
                         <div class="popular-img">
-                            <img  th:if="${category.imageName != null}" th:src="@{/getImage(imageName=${category.imageName})}">
+                            <img  th:src="@{/getImage(imageName=${category.imageName})}">
                             <div class="img-cap">
                                 <span><a th:href="@{/admin/editCategory(id=${category.id})}">UPDATE</a> | <a th:href="@{/admin/delete(id=${category.id})}">DELETE</a></span>
                             </div>

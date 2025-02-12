@@ -2,6 +2,7 @@ package com.vector.vectorservice.service;
 
 import com.vector.vectorservice.dto.CategoryRequestDto;
 import com.vector.vectorservice.dto.CategoryResponseDto;
+import com.vector.vectorservice.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,11 +17,11 @@ public interface CategoryService {
 
     CategoryResponseDto save(CategoryRequestDto categoryRequestDto, MultipartFile multipartFile) throws IOException;
 
-    Optional<CategoryResponseDto> findByName(String name);
+    Optional<CategoryResponseDto> existByName(String name);
 
     void update(CategoryResponseDto categoryResponseDto, MultipartFile multipartFile) throws IOException;
 
-    CategoryResponseDto findById(Long id);
+    Category findById(Long id);
 
     void deleteById(Long id);
 }

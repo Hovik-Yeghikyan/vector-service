@@ -2,6 +2,7 @@ package com.vector.vectorservice.controller;
 
 import com.vector.vectorservice.dto.CategoryRequestDto;
 import com.vector.vectorservice.dto.CategoryResponseDto;
+import com.vector.vectorservice.entity.Category;
 import com.vector.vectorservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,13 +43,9 @@ public class AdminController {
     @PostMapping("/addCategory")
     public String addCategory(@ModelAttribute CategoryRequestDto categoryRequestDto,
                               @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        Optional<CategoryResponseDto> byName = categoryService.findByName(categoryRequestDto.getName());
+        Optional<CategoryResponseDto> byName = categoryService.existByName(categoryRequestDto.getName());
         if (byName.isEmpty()) {
-            CategoryResponseDto save = categoryService.save(categoryRequestDto, multipartFile);
-            if (save == null) {
-                log.info(" field is empty");
-                return "redirect:/admin/addCategory?msg=Incorrect information,please try again";
-            }
+             categoryService.save(categoryRequestDto, multipartFile);
             log.info("Category with {} name added successfully", categoryRequestDto.getName());
             return "redirect:/admin/addCategory?msg=Category added!";
         } else {
@@ -59,9 +56,9 @@ public class AdminController {
 
     @GetMapping("/editCategory")
     public String editCategory(@RequestParam("id") Long id, ModelMap modelMap) {
-        CategoryResponseDto categoryResponseDto = categoryService.findById(id);
-        if (categoryResponseDto != null) {
-            modelMap.put("category", categoryResponseDto);
+        Category category = categoryService.findById(id);
+        if (category != null) {
+            modelMap.put("category", category);
         }
         return "/admin/editCategory";
     }
