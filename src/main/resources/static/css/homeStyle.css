@@ -36,6 +36,27 @@ main {
     width: 600px;
     text-align: center;
 }
+@media (max-width: 1300px) {
+    .category {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 400px;
+        text-align: center;
+    }
+}
+@media (max-width: 900px) {
+    .category {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 300px;
+        text-align: center;
+    }
+}
+
 
 .category img {
     width: 100%;

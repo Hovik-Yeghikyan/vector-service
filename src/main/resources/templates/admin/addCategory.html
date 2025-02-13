@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <link rel="stylesheet" href="/css/addCategoryStyle.css">
+</head>
+<body>
+<div class="container">
+    <h1>Add New Category</h1>
+
+    <p th:if="${msg!=null}" style="color: red;font-size:16px" th:text="${msg}"></p>
+
+    <section class="add-category">
+        <form action="/admin/addCategory" method="post" enctype="multipart/form-data">
+            <label for="category-name">Category Name:</label>
+            <input type="text" id="category-name" name="name" placeholder="Enter category name" required>
+
+            <label for="category-image">Category Image:</label>
+            <input type="file" id="category-image" name="image" accept="image/*" required>
+
+            <button type="submit">Add Category</button>
+            <button> <a href="/admin/adminCategory" style="text-decoration: none;color: white">Go To Admin Panel</a></button>
+        </form>
+    </section>
+
+    <!-- Preview Image -->
+    <div id="image-preview" class="image-preview" style="display: none;">
+        <h3>Image Preview</h3>
+        <img id="preview-img" src="" alt="Image Preview" width="200">
+    </div>
+</div>
+
+<!-- Подключение внешнего JavaScript файла -->
+<script src="/js/addCategory.js"></script>
+</body>
+</html>

@@ -39,17 +39,12 @@ public class HomeController {
     public String loginSuccess(@AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser != null && currentUser.getUser() != null) {
             log.info("user with {} email logged in", currentUser.getUser().getEmail());
-            if (currentUser.getUser().getUserType() == UserType.ADMIN) {
-                return "redirect:/adminPage";
-            }
         }
         return "redirect:/";
     }
 
-    @GetMapping("/adminPage")
-    public String adminPage() {
-        return "/admin/adminPage";
-    }
+
+
 }
 
 
