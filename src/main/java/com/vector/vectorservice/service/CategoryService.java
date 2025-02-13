@@ -17,8 +17,6 @@ public interface CategoryService {
 
     CategoryResponseDto save(CategoryRequestDto categoryRequestDto, MultipartFile multipartFile) throws IOException;
 
-    Optional<CategoryResponseDto> existByName(String name);
-
     void update(CategoryResponseDto categoryResponseDto, MultipartFile multipartFile) throws IOException;
 
     Category findById(Long id);

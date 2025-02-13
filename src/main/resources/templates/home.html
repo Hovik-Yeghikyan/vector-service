@@ -13,7 +13,7 @@
     <th:block th:include="fragment/fragments.html::language"></th:block>
     <div th:if="${currentUser== null}"><a href="/loginPage" th:text="#{index.login}"></a></div>
     <div th:if="${currentUser!=null && currentUser.getUser().userType.name()=='ADMIN'}">
-    <a href="/admin/adminPage">Admin Panel</a> <!-- Added admin panel link -->
+    <a href="/admin/adminPage">Admin Panel</a>
     </div>
     <div th:if="${currentUser!= null}"><span th:text="${currentUser.getUser().name} "></span><a href="/logout"
                                                                                                 th:text="#{index.logout}">logout</a>

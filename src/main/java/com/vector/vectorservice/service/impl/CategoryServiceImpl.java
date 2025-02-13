@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,27 +36,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto save(CategoryRequestDto categoryRequestDto, MultipartFile multipartFile) throws IOException {
-        if (categoryRepository.findByName(categoryRequestDto.getName()).isPresent()) {
+        if (categoryRepository.existsByName(categoryRequestDto.getName())) {
             throw new ResourceAlreadyExistsException("Category with this name already exists!");
+        }
+        if (categoryRequestDto.getName().isEmpty() || multipartFile.isEmpty()) {
+            throw new ResourceNotFoundException("Category name or picture is empty!");
         }
         if (!multipartFile.isEmpty()) {
             String imageName = fileUtil.saveImage(multipartFile);
             categoryRequestDto.setImageName(imageName);
-        }else {
-            throw new ResourceNotFoundException("There are no any picture");
         }
         Category category = categoryMapper.toEntity(categoryRequestDto);
         categoryRepository.save(category);
         return categoryMapper.toDto(category);
-    }
-
-    @Override
-    public Optional<CategoryResponseDto> existByName(String name) {
-        Optional<Category> categoryByName = categoryRepository.findByName(name);
-        if (categoryByName.isPresent()) {
-            throw new ResourceAlreadyExistsException("Category with this name already exists!");
-        }
-        return categoryByName.map(categoryMapper::toDto);
     }
 
     @Override

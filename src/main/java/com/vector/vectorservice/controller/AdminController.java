@@ -3,6 +3,8 @@ package com.vector.vectorservice.controller;
 import com.vector.vectorservice.dto.CategoryRequestDto;
 import com.vector.vectorservice.dto.CategoryResponseDto;
 import com.vector.vectorservice.entity.Category;
+import com.vector.vectorservice.exception.ResourceAlreadyExistsException;
+import com.vector.vectorservice.exception.ResourceNotFoundException;
 import com.vector.vectorservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
+
 
 @Controller
 @Slf4j
@@ -43,14 +45,16 @@ public class AdminController {
     @PostMapping("/addCategory")
     public String addCategory(@ModelAttribute CategoryRequestDto categoryRequestDto,
                               @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        Optional<CategoryResponseDto> byName = categoryService.existByName(categoryRequestDto.getName());
-        if (byName.isEmpty()) {
-             categoryService.save(categoryRequestDto, multipartFile);
-            log.info("Category with {} name added successfully", categoryRequestDto.getName());
-            return "redirect:/admin/addCategory?msg=Category added!";
-        } else {
-            log.info("Category with {} name already exists", categoryRequestDto.getName());
+        try {
+            categoryService.save(categoryRequestDto, multipartFile);
+            log.info("category with name {} added", categoryRequestDto.getName());
+            return "redirect:/admin/addCategory?msg=Category added";
+        } catch (ResourceAlreadyExistsException e) {
+            log.info("category with name {} already exists", categoryRequestDto.getName());
             return "redirect:/admin/addCategory?msg=Category name already in use";
+        } catch (ResourceNotFoundException e) {
+            log.info("one of the fields is empty! ");
+            return "redirect:/admin/addCategory?msg=Category name or picture is empty!";
         }
     }
 
